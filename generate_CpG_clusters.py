@@ -36,7 +36,7 @@ def main():
     
     all_fa_files = [file for file in pathlib.Path(path_to_all_fa).glob("*.fa")]
 
-    output = open("CpG_clusters_whole_genome_radius_{}_minCpG_{}.bed".format(radius, min_num_Cpg), 'w')
+    output = open(f"{outputdir}/CpG_clusters_whole_genome_radius_{radius}_minCpG_{min_num_Cpg}.bed", 'w')
         
     for file in sorted(all_fa_files):
         filename = file.name.strip(".fa")
