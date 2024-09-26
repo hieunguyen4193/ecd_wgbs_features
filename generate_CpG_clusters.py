@@ -22,6 +22,7 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--input', type=str, required=True, help='Path to input FASTA of hg19/hg38')
+    parser.add_argument('--output', type=str, required=True, help='Path to save output')
     parser.add_argument('--radius', type=int, required=True, help='Length of the CpG cluster windows (radius)')
     parser.add_argument('--min_num_cpg', type=int, required=True, help='Minimum number of CpG sites in a region')
     
@@ -29,7 +30,10 @@ def main():
     path_to_all_fa = args.input
     radius = args.radius
     min_num_Cpg = args.min_num_cpg
-
+    outputdir = args.output
+    
+    os.system(f"mkdir -p {outputdir}")
+    
     all_fa_files = [file for file in pathlib.Path(path_to_all_fa).glob("*.fa")]
 
     output = open("CpG_clusters_whole_genome_radius_{}_minCpG_{}.bed".format(radius, min_num_Cpg), 'w')
