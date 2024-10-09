@@ -1,15 +1,10 @@
 // ----- ----- ----- CHANNEL ----- ----- -----
 params.input_pairs = "$params.input/*{.bam,.bam.bai}"
-Channel
-    .fromFilePairs(params.input_pairs, size: 2)
-    .ifEmpty { error "Cannot find any BAM/BAI pairs matching: ${params.input_pairs}" }
-    .view()
-    .set { input_ch }
-src=file(params.src)
 params.num_threads = ""
 params.src = ""
+src=file(params.src)
 Channel
-    .fromPath( params.input_file )
+    .fromFilePairs( params.input_pairs )
     .ifEmpty { error "Cannot find any reads matching: ${params.input_file}"  }
     .view()
     .into {input_ch}
