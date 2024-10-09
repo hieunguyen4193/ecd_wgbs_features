@@ -17,7 +17,7 @@ process split_bam_to_22_chroms {
     maxForks 3
 
     input:
-        set sample_id, file(bam), file(bai) from input_ch
+        tuple sample_id, file(bam), file(bai) from input_ch
         file src
     output:
         file("*") into output_ch
