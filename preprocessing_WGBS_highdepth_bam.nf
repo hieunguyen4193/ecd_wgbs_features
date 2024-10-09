@@ -1,6 +1,7 @@
 // ----- ----- ----- CHANNEL ----- ----- -----
 params.input_file= "$params.input/*.bam"
 src=file(params.src)
+params.num_threads = ""
 
 Channel
     .fromPath( params.input_file )
@@ -20,12 +21,10 @@ process split_bam_to_22_chroms {
         file src
     output:
         file("*") into output_ch
-    shell:
-    '''
-    samplename=$(echo !{input_file} | xargs -n 1 basename);
-    samplename=${samplename%.bam*};
-    bash split_bam_file_to_chroms.sh -i !{input_file} -o ./${samplename};
-    '''
+    script:
+    """
+    bash split_bam_file_to_chroms.sh -i ${input_file} -o . -n ${params.num_threads}
+    """
 }
 
 // example command:
