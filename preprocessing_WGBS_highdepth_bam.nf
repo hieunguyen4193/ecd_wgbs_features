@@ -17,13 +17,13 @@ process split_bam_to_22_chroms {
     maxForks 3
 
     input:
-        tuple val(sample_id), file(bam), file(bai) from input_ch
+        tuple val(sample_id), file(bam) from input_ch
         file src
     output:
         file("*") into output_ch
     script:
     """
-    bash ${params.src} -i ${bam} -o . -n ${params.num_threads}
+    bash ${params.src} -i ${bam[0]} -o . -n ${params.num_threads}
     """
 }
 
