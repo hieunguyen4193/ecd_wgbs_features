@@ -27,6 +27,9 @@ process split_bam_to_22_chroms {
     """
 }
 
-nextflow run preprocessing_WGBS_highdepth_ban.nf \
-    --input /mnt/archiving/DATA_HIEUNHO/GW-bismark_cfDNA-highdepth_pair-end/04_bismark_deduplicated_sorted \
-    --output /mnt/archiving/DATA_HIEUNHO/GW-bismark_cfDNA-highdepth_pair-end/04_bismark_deduplicated_sorted
+// nextflow run preprocessing_WGBS_highdepth_bam.nf \
+//     --input /mnt/archiving/DATA_HIEUNHO/GW-bismark_cfDNA-highdepth_pair-end/04_bismark_deduplicated_sorted \
+//     --output /mnt/archiving/DATA_HIEUNHO/GW-bismark_cfDNA-highdepth_pair-end/04_bismark_deduplicated_sorted \
+//     --src /datassd/DATA_HIEUNGUYEN/2024/outdir/WGBS_highdepth_readID/ecd_wgbs_features/split_bam_file_to_chroms.sh \
+//     --num_threads 10 \
+//     -resume 
