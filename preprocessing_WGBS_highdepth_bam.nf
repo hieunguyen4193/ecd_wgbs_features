@@ -1,5 +1,10 @@
 // ----- ----- ----- CHANNEL ----- ----- -----
-params.input_file= "$params.input/*.bam"
+params.input_pairs = "$params.input/*{.bam,.bam.bai}"
+Channel
+    .fromFilePairs(params.input_pairs, size: 2)
+    .ifEmpty { error "Cannot find any BAM/BAI pairs matching: ${params.input_pairs}" }
+    .view()
+    .set { input_ch }
 src=file(params.src)
 params.num_threads = ""
 params.src = ""
@@ -7,7 +12,7 @@ Channel
     .fromPath( params.input_file )
     .ifEmpty { error "Cannot find any reads matching: ${params.input_file}"  }
     .view()
-    .set {input_ch}
+    .into {input_ch}
 
 process split_bam_to_22_chroms {
     cache "deep";
@@ -17,13 +22,13 @@ process split_bam_to_22_chroms {
     maxForks 3
 
     input:
-        file(input_file) from input_ch
+        set sample_id, file(bam), file(bai) from input_ch
         file src
     output:
         file("*") into output_ch
     script:
     """
-    bash ${params.src} -i ${input_file} -o . -n ${params.num_threads}
+    bash ${params.src} -i ${bam} -o . -n ${params.num_threads}
     """
 }
 
